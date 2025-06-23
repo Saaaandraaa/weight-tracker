@@ -3,7 +3,7 @@ const app = document.createElement('div');
 app.className = 'container';
 app.innerHTML = `
   <header>
-    <h1>🎀 专属养成打卡</h1>
+    <h1>🎀 冯栩湘减肥专属记录器</h1>
     <img class="avatar" src="avatar.png" alt="avatar">
   </header>
   <div class="card">
