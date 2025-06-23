@@ -21,8 +21,9 @@ app.innerHTML = `
 `;
 root.appendChild(app);
 
-const log = JSON.parse(localStorage.getItem('trackerLog') || '[]');
+let log = JSON.parse(localStorage.getItem('trackerLog') || '[]');
 const logEl = document.getElementById('log');
+
 const render = () => {
   logEl.innerHTML = '';
   log.forEach(entry => {
@@ -37,6 +38,7 @@ const render = () => {
       <div>🏃‍♀️ 运动时间：${entry.exercise} 分钟</div>
       <div>🍱 饮食：${entry.food}</div>
       <div>🧠 心情：${entry.mood}</div>
+      <button onclick="deleteEntry('${entry.id}')" style="margin-top:10px;background:#e66;">🗑️ 删除这条记录</button>
     `;
     logEl.appendChild(c);
   });
@@ -45,6 +47,7 @@ render();
 
 app.querySelector('button').addEventListener('click', () => {
   const entry = {
+    id: Date.now().toString(),
     date: app.querySelector('#date').value,
     weight: app.querySelector('#weight').value,
     waist: app.querySelector('#waist').value,
@@ -59,3 +62,9 @@ app.querySelector('button').addEventListener('click', () => {
   localStorage.setItem('trackerLog', JSON.stringify(log));
   render();
 });
+
+window.deleteEntry = function(id) {
+  log = log.filter(entry => entry.id !== id);
+  localStorage.setItem('trackerLog', JSON.stringify(log));
+  render();
+};
