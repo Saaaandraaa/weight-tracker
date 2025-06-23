@@ -4,59 +4,80 @@ body {
   margin: 0;
   padding: 0;
 }
+
 .container {
   max-width: 700px;
   margin: auto;
   padding: 20px;
 }
+
 header {
   text-align: center;
   margin-bottom: 20px;
 }
+
 .avatar {
   width: 120px;
   height: 120px;
   border-radius: 50%;
   border: 2px solid #ddd;
 }
+
+/* 主要优化点：卡片区域增加更多内边距 */
 .card {
   background: white;
-  padding: 16px;
-  margin-bottom: 12px;
+  padding: 28px; /* 从16px增加到28px (↑75%) - 解决蓝色圆圈区域问题 */
+  margin-bottom: 16px; /* 增加底部间距 */
   border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08); /* 增强阴影效果 */
 }
+
+/* 输入框增加更多空间和间距 */
 input, textarea {
   width: 100%;
-  margin-bottom: 8px;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  margin-bottom: 16px; /* 从8px增加到16px (↑100%) */
+  padding: 12px; /* 从8px增加到12px (↑50%) */
+  border: 1px solid #e0e0e0; /* 使用更柔和的边框色 */
+  border-radius: 6px;
+  background: #fafafa; /* 添加轻微背景色 */
 }
+
+/* 特殊处理日期输入框 */
+input[type="date"] {
+  padding: 11px; /* 特殊处理日期选择器 */
+}
+
 button {
-  padding: 10px 16px;
+  padding: 12px 16px; /* 稍增加按钮高度 */
   background: #5a9;
   color: white;
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  font-weight: bold; /* 增加按钮文字重量 */
 }
+
+/* 移动端优化 */
 @media (max-width: 600px) {
   .container {
     padding: 12px;
   }
+  
+  /* 移动端卡片保持充足内边距 */
+  .card {
+    padding: 20px 16px; /* 上/下20px，左/右16px */
+  }
 
+  /* 移动端输入框优化 */
   input, textarea {
-    font-size: 16px;
+    margin-bottom: 14px;
+    padding: 10px;
+    background: #fff; /* 移动端使用纯白背景 */
   }
 
   button {
     width: 100%;
     font-size: 16px;
-  }
-
-  .card {
-    padding: 12px;
   }
 
   header h1 {
