@@ -41,3 +41,30 @@ button {
   border-radius: 4px;
   cursor: pointer;
 }
+@media (max-width: 600px) {
+  .container {
+    padding: 12px;
+  }
+
+  input, textarea {
+    font-size: 16px;
+  }
+
+  button {
+    width: 100%;
+    font-size: 16px;
+  }
+
+  .card {
+    padding: 12px;
+  }
+
+  header h1 {
+    font-size: 20px;
+  }
+
+  .avatar {
+    width: 100px;
+    height: 100px;
+  }
+}
