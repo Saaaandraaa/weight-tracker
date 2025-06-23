@@ -29,6 +29,7 @@ const render = () => {
   log.forEach(entry => {
     const c = document.createElement('div');
     c.className = 'card';
+    c.style.position = 'relative';
     c.innerHTML = `
       <div>📅 ${entry.date}</div>
       <div>⚖️ 体重：${entry.weight} kg</div>
@@ -38,7 +39,7 @@ const render = () => {
       <div>🏃‍♀️ 运动时间：${entry.exercise} 分钟</div>
       <div>🍱 饮食：${entry.food}</div>
       <div>🧠 心情：${entry.mood}</div>
-      <button onclick="deleteEntry('${entry.id}')" style="margin-top:10px;background:#e66;">🗑️ 删除这条记录</button>
+      <button onclick="deleteEntry('${entry.id}')" style="position:absolute; bottom:8px; right:8px; background:transparent; border:none; font-size:16px; cursor:pointer;">🗑️</button>
     `;
     logEl.appendChild(c);
   });
@@ -68,3 +69,23 @@ window.deleteEntry = function(id) {
   localStorage.setItem('trackerLog', JSON.stringify(log));
   render();
 };
+
+const clearButton = document.createElement('button');
+clearButton.innerHTML = '🚮';
+clearButton.style.cssText = `
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: transparent;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+`;
+clearButton.addEventListener('click', () => {
+  if (confirm('确定要清空所有记录吗？')) {
+    log = [];
+    localStorage.removeItem('trackerLog');
+    render();
+  }
+});
+document.body.appendChild(clearButton);
