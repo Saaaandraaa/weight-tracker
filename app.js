@@ -47,10 +47,10 @@ const render = () => {
     deleteBtn.innerHTML = '🗑️';
     deleteBtn.style.cssText = `
       position: absolute;
-      bottom: 10px;
+      bottom: 20px;
       right: 50%;
       transform: translateX(50%);
-      background: rgba(255, 99, 99, 0.8);
+      background: rgba(255, 255, 255, 0.8);
       border: none;
       border-radius: 6px;
       font-size: 18px;
@@ -65,10 +65,10 @@ const render = () => {
     
     // Add hover effect
     deleteBtn.onmouseenter = () => {
-      deleteBtn.style.background = 'rgba(255, 99, 99, 1)';
+      deleteBtn.style.background = 'rgba(255, 255, 255, 1)';
     };
     deleteBtn.onmouseleave = () => {
-      deleteBtn.style.background = 'rgba(255, 99, 99, 0.8)';
+      deleteBtn.style.background = 'rgba(255, 255, 255, 0.8)';
     };
     
     deleteBtn.onclick = () => deleteEntry(entry.id);
