@@ -42,16 +42,18 @@ const render = () => {
     `;
     const deleteBtn = document.createElement('button');
     deleteBtn.innerHTML = '🗑️';
-    deleteBtn.style.cssText = `
-      position: absolute;
-      bottom: 10px;
-      right: 10px;
-      background: rgba(255,255,255,0.6);
-      border: none;
-      border-radius: 4px;
-      font-size: 16px;
-      cursor: pointer;
-    `;
+   deleteBtn.style.cssText = `
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  background: rgba(255,255,255,0.6);
+  border: none;
+  border-radius: 4px;
+  font-size: 20px;
+  z-index: 1;
+  padding: 4px;
+  cursor: pointer;
+`;
     deleteBtn.onclick = () => deleteEntry(entry.id);
     c.appendChild(deleteBtn);
     logEl.appendChild(c);
