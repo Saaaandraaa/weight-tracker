@@ -1,14 +1,13 @@
 <!DOCTYPE html>
 <html lang="zh">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>🎀 冯栩湘减肥专属记录器</title>
   <link rel="stylesheet" href="styles.css">
 
-  <!-- ✅ 加入 Firebase SDK： -->
+  <!-- ✅ Firebase 初始化 -->
   <script type="module">
-    // Firebase SDK 模块引入（ES 模块形式）
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
     import { getDatabase } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
@@ -22,10 +21,10 @@
       appId: "1:854520907789:web:1421612c7a65f707856d44"
     };
 
-    // 初始化 Firebase（只是提前加载，后续 app.js 会再正式调用）
     const app = initializeApp(firebaseConfig);
     const database = getDatabase(app);
-    window._firebase = { app, database }; // 暴露给 app.js 使用
+    window.firebaseApp = app;
+    window.firebaseDatabase = database;
   </script>
 </head>
 <body>
@@ -34,14 +33,18 @@
 
   <button onclick="clearData()" style="background:#e66; margin-top:20px;">🗑️ 清空所有记录</button>
 
-  <script>
-    function clearData() {
+  <!-- ✅ 替换后的清除按钮逻辑 -->
+  <script type="module">
+    import { getDatabase, ref, remove } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+    window.clearData = async function () {
       if (confirm("确定要清空所有记录吗？此操作不可恢复。")) {
-        localStorage.clear();
-        alert("已清空所有记录");
+        const db = getDatabase();
+        await remove(ref(db, 'trackerLog'));
+        alert("✅ 已清空云端所有记录");
         location.reload();
       }
-    }
+    };
   </script>
 </body>
 </html>
