@@ -1,9 +1,3 @@
-// ✅ 使用 Firebase 实现云端数据同步
-import { getDatabase, ref, push, onValue, remove, set } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
-
-const database = window._firebase.database;
-const dbRef = ref(database, 'trackerLog');
-
 const root = document.getElementById('root');
 const app = document.createElement('div');
 app.className = 'container';
@@ -27,16 +21,17 @@ app.innerHTML = `
 `;
 root.appendChild(app);
 
+let log = JSON.parse(localStorage.getItem('trackerLog') || '[]');
 const logEl = document.getElementById('log');
 
-const render = (entries) => {
+const render = () => {
   logEl.innerHTML = '';
-  Object.entries(entries || {}).reverse().forEach(([id, entry]) => {
+  log.forEach(entry => {
     const c = document.createElement('div');
     c.className = 'card';
     c.style.position = 'relative';
-    c.style.paddingBottom = '80px';
-
+    c.style.paddingBottom = '80px'; // Add extra padding for delete button
+    
     c.innerHTML = `
       <div>📅 ${entry.date}</div>
       <div>⚖️ 体重：${entry.weight} kg</div>
@@ -47,7 +42,7 @@ const render = (entries) => {
       <div>🍱 饮食：${entry.food}</div>
       <div>💭 心情：${entry.mood}</div>
     `;
-
+    
     const deleteBtn = document.createElement('button');
     deleteBtn.innerHTML = '🗑️';
     deleteBtn.style.cssText = `
@@ -68,20 +63,26 @@ const render = (entries) => {
       width: fit-content;
       text-align: center;
     `;
-    deleteBtn.onclick = () => deleteEntry(id);
-
+    
+    // Add hover effect
+    deleteBtn.onmouseenter = () => {
+      deleteBtn.style.background = 'rgba(255, 255, 255, 1)';
+    };
+    deleteBtn.onmouseleave = () => {
+      deleteBtn.style.background = 'rgba(255, 255, 255, 0.8)';
+    };
+    
+    deleteBtn.onclick = () => deleteEntry(entry.id);
     c.appendChild(deleteBtn);
     logEl.appendChild(c);
   });
 };
 
-onValue(dbRef, (snapshot) => {
-  const data = snapshot.val();
-  render(data);
-});
+render();
 
 app.querySelector('button').addEventListener('click', () => {
   const entry = {
+    id: Date.now().toString(),
     date: app.querySelector('#date').value,
     weight: app.querySelector('#weight').value,
     waist: app.querySelector('#waist').value,
@@ -91,11 +92,14 @@ app.querySelector('button').addEventListener('click', () => {
     food: app.querySelector('#food').value,
     mood: app.querySelector('#mood').value,
   };
-
+  
   if (!entry.date) return alert('请填写日期');
-
-  push(dbRef, entry);
-
+  
+  log.unshift(entry);
+  localStorage.setItem('trackerLog', JSON.stringify(log));
+  render();
+  
+  // Clear form after saving
   app.querySelector('#date').value = '';
   app.querySelector('#weight').value = '';
   app.querySelector('#waist').value = '';
@@ -106,15 +110,10 @@ app.querySelector('button').addEventListener('click', () => {
   app.querySelector('#mood').value = '';
 });
 
-function deleteEntry(id) {
+window.deleteEntry = function(id) {
   if (confirm('确定要删除这条记录吗？')) {
-    remove(ref(database, `trackerLog/${id}`));
-  }
-}
-
-window.clearData = function () {
-  if (confirm("确定要清空所有记录吗？此操作不可恢复。")) {
-    set(dbRef, {});
-    alert("已清空所有记录");
+    log = log.filter(entry => entry.id !== id);
+    localStorage.setItem('trackerLog', JSON.stringify(log));
+    render();
   }
 };
