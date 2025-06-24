@@ -5,20 +5,43 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>🎀 冯栩湘减肥专属记录器</title>
   <link rel="stylesheet" href="styles.css">
+
+  <!-- ✅ 加入 Firebase SDK： -->
+  <script type="module">
+    // Firebase SDK 模块引入（ES 模块形式）
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getDatabase } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBj5CeO7ZZvrbwAH95Zl9JsZalJ7GK7jS8",
+      authDomain: "weight-tracker-496d0.firebaseapp.com",
+      databaseURL: "https://weight-tracker-496d0-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "weight-tracker-496d0",
+      storageBucket: "weight-tracker-496d0.appspot.com",
+      messagingSenderId: "854520907789",
+      appId: "1:854520907789:web:1421612c7a65f707856d44"
+    };
+
+    // 初始化 Firebase（只是提前加载，后续 app.js 会再正式调用）
+    const app = initializeApp(firebaseConfig);
+    const database = getDatabase(app);
+    window._firebase = { app, database }; // 暴露给 app.js 使用
+  </script>
 </head>
 <body>
   <div id="root"></div>
-  <script src="app.js"></script>
-<button onclick="clearData()" style="background:#e66; margin-top:20px;">🗑️ 清空所有记录</button>
+  <script src="app.js" type="module"></script>
 
-<script>
-  function clearData() {
-    if (confirm("确定要清空所有记录吗？此操作不可恢复。")) {
-      localStorage.clear();
-      alert("已清空所有记录");
-      location.reload();
+  <button onclick="clearData()" style="background:#e66; margin-top:20px;">🗑️ 清空所有记录</button>
+
+  <script>
+    function clearData() {
+      if (confirm("确定要清空所有记录吗？此操作不可恢复。")) {
+        localStorage.clear();
+        alert("已清空所有记录");
+        location.reload();
+      }
     }
-  }
-</script>
+  </script>
 </body>
 </html>
