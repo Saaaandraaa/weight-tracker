@@ -29,6 +29,7 @@ const render = () => {
   log.forEach(entry => {
     const c = document.createElement('div');
     c.className = 'card';
+    c.style.position = 'relative';
     c.innerHTML = `
       <div>📅 ${entry.date}</div>
       <div>⚖️ 体重：${entry.weight} kg</div>
@@ -38,8 +39,21 @@ const render = () => {
       <div>🏃‍♀️ 运动时间：${entry.exercise} 分钟</div>
       <div>🍱 饮食：${entry.food}</div>
       <div>🧠 心情：${entry.mood}</div>
-      <button onclick="deleteEntry('${entry.id}')" style="margin-top:10px;background:#e66;">🗑️ 删除这条记录</button>
     `;
+    const deleteBtn = document.createElement('button');
+    deleteBtn.innerHTML = '🗑️';
+    deleteBtn.style.cssText = `
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      background: rgba(255,255,255,0.6);
+      border: none;
+      border-radius: 4px;
+      font-size: 16px;
+      cursor: pointer;
+    `;
+    deleteBtn.onclick = () => deleteEntry(entry.id);
+    c.appendChild(deleteBtn);
     logEl.appendChild(c);
   });
 };
