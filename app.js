@@ -30,6 +30,8 @@ const render = () => {
     const c = document.createElement('div');
     c.className = 'card';
     c.style.position = 'relative';
+    c.style.paddingBottom = '50px'; // Add extra padding for delete button
+    
     c.innerHTML = `
       <div>📅 ${entry.date}</div>
       <div>⚖️ 体重：${entry.weight} kg</div>
@@ -38,27 +40,40 @@ const render = () => {
       <div>🦵 大腿围：${entry.thigh} cm</div>
       <div>🏃‍♀️ 运动时间：${entry.exercise} 分钟</div>
       <div>🍱 饮食：${entry.food}</div>
-      <div>🧠 心情：${entry.mood}</div>
+      <div>💭 心情：${entry.mood}</div>
     `;
+    
     const deleteBtn = document.createElement('button');
     deleteBtn.innerHTML = '🗑️';
-   deleteBtn.style.cssText = `
-  position: absolute;
-  bottom: 12px;
-  right: 12px;
-  background: rgba(255,255,255,0.6);
-  border: none;
-  border-radius: 4px;
-  font-size: 20px;
-  z-index: 1;
-  padding: 4px;
-  cursor: pointer;
-`;
+    deleteBtn.style.cssText = `
+      position: absolute;
+      bottom: 10px;
+      right: 15px;
+      background: rgba(255, 99, 99, 0.8);
+      border: none;
+      border-radius: 6px;
+      font-size: 18px;
+      z-index: 10;
+      padding: 6px 8px;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    `;
+    
+    // Add hover effect
+    deleteBtn.onmouseenter = () => {
+      deleteBtn.style.background = 'rgba(255, 99, 99, 1)';
+    };
+    deleteBtn.onmouseleave = () => {
+      deleteBtn.style.background = 'rgba(255, 99, 99, 0.8)';
+    };
+    
     deleteBtn.onclick = () => deleteEntry(entry.id);
     c.appendChild(deleteBtn);
     logEl.appendChild(c);
   });
 };
+
 render();
 
 app.querySelector('button').addEventListener('click', () => {
@@ -73,14 +88,28 @@ app.querySelector('button').addEventListener('click', () => {
     food: app.querySelector('#food').value,
     mood: app.querySelector('#mood').value,
   };
+  
   if (!entry.date) return alert('请填写日期');
+  
   log.unshift(entry);
   localStorage.setItem('trackerLog', JSON.stringify(log));
   render();
+  
+  // Clear form after saving
+  app.querySelector('#date').value = '';
+  app.querySelector('#weight').value = '';
+  app.querySelector('#waist').value = '';
+  app.querySelector('#hip').value = '';
+  app.querySelector('#thigh').value = '';
+  app.querySelector('#exercise').value = '';
+  app.querySelector('#food').value = '';
+  app.querySelector('#mood').value = '';
 });
 
 window.deleteEntry = function(id) {
-  log = log.filter(entry => entry.id !== id);
-  localStorage.setItem('trackerLog', JSON.stringify(log));
-  render();
+  if (confirm('确定要删除这条记录吗？')) {
+    log = log.filter(entry => entry.id !== id);
+    localStorage.setItem('trackerLog', JSON.stringify(log));
+    render();
+  }
 };
