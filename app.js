@@ -30,7 +30,7 @@ const render = () => {
     const c = document.createElement('div');
     c.className = 'card';
     c.style.position = 'relative';
-    c.style.paddingBottom = '50px'; // Add extra padding for delete button
+    c.style.paddingBottom = '80px'; // Add extra padding for delete button
     
     c.innerHTML = `
       <div>📅 ${entry.date}</div>
@@ -47,7 +47,7 @@ const render = () => {
     deleteBtn.innerHTML = '🗑️';
     deleteBtn.style.cssText = `
       position: absolute;
-      bottom: 20px;
+      bottom: 30px;
       right: 50%;
       transform: translateX(50%);
       background: rgba(255, 255, 255, 0.8);
