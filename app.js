@@ -47,9 +47,10 @@ const render = () => {
     deleteBtn.innerHTML = '🗑️';
     deleteBtn.style.cssText = `
       position: absolute;
-      bottom: 30px;
-      right: 50%;
-      transform: translateX(50%);
+      bottom: 20px;
+      left: 20px;
+      right: 20px;
+      margin: 0 auto;
       background: rgba(255, 255, 255, 0.8);
       border: none;
       border-radius: 6px;
@@ -59,7 +60,7 @@ const render = () => {
       cursor: pointer;
       transition: background-color 0.2s ease;
       box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-      min-width: 32px;
+      width: fit-content;
       text-align: center;
     `;
     
