@@ -1,50 +1,24 @@
 <!DOCTYPE html>
 <html lang="zh">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>🎀 冯栩湘减肥专属记录器</title>
   <link rel="stylesheet" href="styles.css">
-
-  <!-- ✅ Firebase 初始化 -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { getDatabase } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyBj5CeO7ZZvrbwAH95Zl9JsZalJ7GK7jS8",
-      authDomain: "weight-tracker-496d0.firebaseapp.com",
-      databaseURL: "https://weight-tracker-496d0-default-rtdb.asia-southeast1.firebasedatabase.app",
-      projectId: "weight-tracker-496d0",
-      storageBucket: "weight-tracker-496d0.appspot.com",
-      messagingSenderId: "854520907789",
-      appId: "1:854520907789:web:1421612c7a65f707856d44"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const database = getDatabase(app);
-    window.firebaseApp = app;
-    window.firebaseDatabase = database;
-  </script>
 </head>
 <body>
   <div id="root"></div>
-  <script src="app.js" type="module"></script>
+  <script src="app.js"></script>
+<button onclick="clearData()" style="background:#e66; margin-top:20px;">🗑️ 清空所有记录</button>
 
-  <button onclick="clearData()" style="background:#e66; margin-top:20px;">🗑️ 清空所有记录</button>
-
-  <!-- ✅ 替换后的清除按钮逻辑 -->
-  <script type="module">
-    import { getDatabase, ref, remove } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
-
-    window.clearData = async function () {
-      if (confirm("确定要清空所有记录吗？此操作不可恢复。")) {
-        const db = getDatabase();
-        await remove(ref(db, 'trackerLog'));
-        alert("✅ 已清空云端所有记录");
-        location.reload();
-      }
-    };
-  </script>
+<script>
+  function clearData() {
+    if (confirm("确定要清空所有记录吗？此操作不可恢复。")) {
+      localStorage.clear();
+      alert("已清空所有记录");
+      location.reload();
+    }
+  }
+</script>
 </body>
 </html>
