@@ -48,7 +48,8 @@ const render = () => {
     deleteBtn.style.cssText = `
       position: absolute;
       bottom: 10px;
-      right: 15px;
+      right: 50%;
+      transform: translateX(50%);
       background: rgba(255, 99, 99, 0.8);
       border: none;
       border-radius: 6px;
@@ -58,6 +59,8 @@ const render = () => {
       cursor: pointer;
       transition: background-color 0.2s ease;
       box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      min-width: 32px;
+      text-align: center;
     `;
     
     // Add hover effect
